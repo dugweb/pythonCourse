@@ -101,16 +101,125 @@ class LinkedList(object):
 
 
 
-l = LinkedList([3,4,5])
-l.append(1)
-l.append(2)
-l.append(3)
-l.append(4)
-l.append(5)
+# l = LinkedList([3,4,5])
+# l.append(1)
+# l.append(2)
+# l.append(3)
+# l.append(4)
+# l.append(5)
 
-l2 = LinkedList([9,8,7,6])
-l2 += [3,4]
-l2.count()
+# l2 = LinkedList([9,8,7,6])
+# l2 += [3,4]
+# l2.count()
+
+
+
+
+
+import unittest
+
+class LinkedListTestCase(unittest.TestCase):
+
+    def test_creation_and_equal(self):
+        l1 = LinkedList([1, 2, 3])
+
+        self.assertTrue(l1.start is not None)
+        self.assertEqual(l1.start.elem, 1)
+
+        self.assertTrue(l1.start.next is not None)
+        self.assertEqual(l1.start.next.elem, 2)
+
+        self.assertTrue(l1.start.next.next is not None)
+        self.assertEqual(l1.start.next.next.elem, 3)
+
+    def test_append(self):
+        my_list = LinkedList()
+
+        my_list.append(1)
+        self.assertEqual(my_list.start.elem, 1)
+        self.assertEqual(my_list.start.next, None)
+
+        my_list.append(2)
+        self.assertEqual(my_list.start.elem, 1)
+        self.assertEqual(my_list.start.next, Node(2))
+        self.assertEqual(my_list.start.next.elem, 2)
+        self.assertEqual(my_list.start.next.next, None)
+
+        self.assertEqual(my_list.count(), 2)
+
+    def test_count(self):
+        self.assertEqual(LinkedList([1, 2, 3]).count(), 3)
+
+    def test_equals(self):
+        self.assertEqual(
+            LinkedList([1, 2, 3]),
+            LinkedList([1, 2, 3]))
+
+        self.assertEqual(
+            LinkedList([]),
+            LinkedList([]))
+
+        self.assertEqual(
+            LinkedList([1]),
+            LinkedList([1]))
+
+        self.assertNotEqual(
+            LinkedList([1, 2]),
+            LinkedList([1, 2, 3]))
+
+        self.assertNotEqual(
+            LinkedList([1]),
+            LinkedList([]))
+
+    def test_get_item(self):
+        my_list = LinkedList([1, 2, 3, 4])
+        self.assertEqual(my_list[0], 1)
+        self.assertEqual(my_list[2], 3)
+
+        with self.assertRaises(IndexError):
+            my_list[4]
+
+    def test_iterate(self):
+        my_list = LinkedList([1, 2, 3, 4])
+        count = 0
+        for elem in my_list:
+            count += 1
+        self.assertEqual(count, 4)
+
+    def test_add_list(self):
+        my_list = LinkedList([1, 2])
+        new_list = my_list + LinkedList([3, 4, 5])
+        self.assertNotEqual(id(my_list), id(new_list))
+        self.assertEqual(new_list, LinkedList([1, 2, 3, 4, 5]))
+
+    def test_iadd_list(self):
+        my_list = LinkedList([1, 2])
+        my_list += LinkedList([3, 4, 5])
+        self.assertEqual(my_list, LinkedList([1, 2, 3, 4, 5]))
+
+    def test_len(self):
+        my_list = LinkedList([1, 2, 3, 4, 5])
+        self.assertEqual(len(my_list), 5)
+
+    def test_pop(self):
+        my_list = LinkedList([1])
+        self.assertEqual(my_list.pop(), 1)
+        self.assertEqual(my_list.count(), 0)
+
+        my_list = LinkedList([1, 2, 3, 4, 5])
+        self.assertEqual(my_list.pop(), 5)
+        self.assertEqual(my_list.count(), 4)
+
+        my_list = LinkedList([1, 2, 3])
+        self.assertEqual(my_list.pop(1), 2)
+        self.assertEqual(my_list.count(), 2)
+        self.assertEqual(my_list, LinkedList([1, 3]))
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+
 
 
 
