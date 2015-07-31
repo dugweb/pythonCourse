@@ -38,7 +38,14 @@ class LinkedList(object):
         n.value = value
         n.next = self.current_node
 
-        self.current_node = n
+        iterator = self.current_node
+        if not iterator:
+            self.current_node = n
+
+        else:
+            while iterator.next:
+                iterator = iterator.next
+            iterator.next = n
 
     def count(self):
         count = 0
@@ -99,6 +106,16 @@ class LinkedList(object):
     def __eq__(self, other):
         return self.__repr__() == other.__repr__()
 
+    def __getitem__(self, index):
+
+        if index > self.count() - 1:
+            raise IndexError
+
+        current_node = self.current_node
+        for i in range(i):
+            current_node = current_node.next
+
+        return current_node
 
 
 # l = LinkedList([3,4,5])
