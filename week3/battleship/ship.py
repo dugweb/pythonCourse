@@ -13,24 +13,22 @@ class Ship(object):
 		self.name = name
 
 
-	def defend(self, shot = (0,0)):
-		''' Compares a shot coordinate with the coordinates in the hitbox.
-			***Note***, this returns whether it successfully defended or not
-			(so if all shots miss True will be returned)'''
+	def attack(self, shot = (0,0)):
+		''' Compares a shot coordinate with the coordinates in the hitbox.'''
 
 		hb = self.hitBox
-		defend = True
+		hit = False
 		summary = ""
 
 		for shipNode in hb:
 			if shipNode['point'] == shot:
 				shipNode['hit'] = True
-				defend = False
+				hit = True
 
 		### Uncomment if you want the Ship class to give some feedback,
 		### but that would probably be better left to the Player class
 
-		# if not defend:
+		# if hit:
 		# 	summary += "Hit! "
 		# 	if self.sunk():
 		# 		summary += "And you sunk my {}".format(self.name)
@@ -39,7 +37,7 @@ class Ship(object):
 
 		# print summary
 		
-		return defend
+		return hit
 
 	def sunk(self):
 		''' Checks whether this ship has any nodes not hit, otherwise it is sunk'''
@@ -110,7 +108,7 @@ class ShipTestCase(unittest.TestCase):
 	def test_ship_defend(self):
 
 		s = Ship()
-		self.assertFalse(s.defend((1,0))) # Calls to Defend return True if there are no hits, and False if there is a hit
+		self.assertTrue(s.attack((1,0))) # Calls to Defend return True if there are no hits, and False if there is a hit
 
 
 
