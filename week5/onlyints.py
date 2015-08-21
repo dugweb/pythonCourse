@@ -16,16 +16,17 @@ class only_int_arguments(object):
 		self.original_function = original_function
 
 	def __call__(self, *args):
-
-		def wrapper(*args):
-			for val in args:
-				if (not isinstance(val, int)):
-					raise(ValueError, "judist priest")
-			return self.original_function(args)
-
-		return wrapper
-
-print "judist"
+		lst = []
+		for arg in args:
+			try:
+				lst += arg
+			except:
+				lst += [arg]
+	
+		for val in lst:
+			if (not isinstance(val, int)):
+				raise(ValueError, "judist priest")
+		return self.original_function(*lst)
 
 
 @only_int_arguments
